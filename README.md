@@ -1,98 +1,158 @@
-# ShotPerfect
+# Shot Perfect
+> An open-source alternative to CleanShot X for macOS. Capture, edit, and enhance your screenshots with professional quality.
 
-![ShotPerfect Logo](path/to/logo.png) <!-- Replace with actual logo path -->
+Shot Perfect is a fast, lightweight screenshot tool built with Tauri + React. It provides a powerful yet simple workflow for capturing screenshots, editing them with backgrounds/effects/annotations, and exporting quickly.
 
-## Introduction
+## Background
 
-ShotPerfect is a powerful desktop application designed to enhance your screenshot experience. Built with modern web technologies, it leverages the capabilities of Tauri for a lightweight and efficient user interface. The application integrates various features to streamline the process of capturing, editing, and managing screenshots.
+Clean screenshot workflows usually need three things: capture fast, polish fast (background/shadow/roundness), and annotate fast (arrows, labels). Shot Perfect is a macOS-native app that keeps everything local and lightweight.
 
-## Key Features
+## Features
 
-- **Screenshot Capture**: Easily capture screenshots with customizable options.
-- **Image Editing**: Basic editing tools to annotate and modify screenshots.
-- **Global Shortcuts**: Set up global keyboard shortcuts for quick access.
-- **Cross-Platform Support**: Runs seamlessly on Windows, macOS, and Linux.
-- **OCR Integration**: Utilize Tesseract.js for optical character recognition.
-- **User-Friendly Interface**: Built with React and styled using Tailwind CSS for a modern look.
+### Capture Modes
 
-## Folder Structure
+- **Region capture**: Select any area of your screen (`⌘⇧2`, enabled by default)
+- **Fullscreen capture**: Capture your entire screen (`⌘⇧F`, enable in Preferences)
+- **Window capture**: Capture a specific window (`⌘⇧D`, enable in Preferences)
 
-The project follows a structured folder organization for better maintainability:
+### Image Editing
 
+- **Background library**: Curated wallpapers, Mac assets, and mesh patterns
+- **Custom backgrounds**: Solid colors and transparent checkerboard
+- **Effects**: Blur + noise controls
+- **Shadow + roundness**: Tune depth and corner radius
+- **Export**: Save at high quality for docs, decks, and social
+
+### Annotation Tools
+
+- **Shapes**: Circle, rectangle, line, arrow
+- **Text**: Add text with adjustable size
+- **Numbered labels**: Auto-incrementing badges for step-by-step callouts
+- **Editability**: Select, move, and delete annotations
+- **Styling**: Colors, opacity, borders, alignment
+
+### OCR (Optical Character Recognition)
+
+- **Text extraction**: Extract text from screenshots using OCR
+- **Full image processing**: Recognizes text from the entire edited image including annotations
+- **Copy to clipboard**: Easily copy extracted text for use elsewhere
+- **Automatic preprocessing**: Image enhancement (grayscale, contrast, brightness) for better accuracy
+- **Auto-rotation**: Automatically detects and corrects rotated text
+- **Offline support**: OCR works fully offline with bundled Tesseract.js and language data
+
+### Workflow
+
+- **Global shortcuts**: Capture from anywhere, even when hidden
+- **Auto-apply**: Apply default background and save without opening the editor
+- **Clipboard**: Copy to clipboard after capture/export
+- **Preferences**: Save directory, defaults, and shortcut settings persist
+- **Menu bar**: Accessible from the menu bar
+- **Native performance**: Rust + Tauri
+
+5. Grant Screen Recording permission when prompted
+
+> Note: Shot Perfect is ad-hoc signed. macOS Gatekeeper may warn for apps that aren’t notarized. You can inspect the source and build it yourself.
+
+### Build from source
+
+```bash
+git clone https://github.com/vikasexcel/ShotPerfect.git
+cd ShotPerfect
+
+pnpm install
+
+pnpm tauri build
 ```
-.
-├── .git                  # Git version control files
-├── .github               # GitHub-specific files (e.g., issue templates)
-├── .gitignore            # Files and directories to ignore in Git
-├── .vscode               # Visual Studio Code settings
-├── AGENTS.md            # Documentation for agents
-├── CHANGELOG.md          # Change log for tracking updates
-├── CODE_OF_CONDUCT.md    # Code of conduct for contributors
-├── CONTRIBUTING.md       # Guidelines for contributing to the project
-├── LICENSE               # License information
-├── bettershot-landing    # Landing page assets
-├── index.html            # Main HTML file
-├── package.json          # Project metadata and dependencies
-├── pnpm-lock.yaml        # Lock file for pnpm package manager
-├── postcss.config.js     # PostCSS configuration
-├── public                # Public assets
-├── scripts               # Custom scripts
-├── src                   # Source code for the application
-│   ├── components        # React components
-│   ├── hooks             # Custom React hooks
-│   └── utils             # Utility functions
-├── src-tauri             # Tauri-specific code
-│   ├── Cargo.toml        # Rust package configuration
-│   └── src               # Rust source code
-├── tsconfig.json         # TypeScript configuration
-├── tsconfig.node.json    # Node-specific TypeScript configuration
-├── vite.config.ts        # Vite configuration
-└── vitest.config.ts      # Vitest configuration
-```
 
-## Installation & Setup
+The installer will be located in `src-tauri/target/release/bundle/`
 
-To get started with ShotPerfect, follow these steps:
+#### Requirements
 
-1. Clone the repository:
-   ```bash
-   git clone https://github.com/vikasexcel/ShotPerfect.git
-   ```
+- **Node.js**: 18+
+- **pnpm**
+- **Rust**: latest stable
 
-2. Navigate to the project directory:
-   ```bash
-   cd ShotPerfect
-   ```
+#### Required permissions
 
-3. Install the dependencies using pnpm:
-   ```bash
-   pnpm install
-   ```
+On first launch, macOS will request **Screen Recording** permission:
 
-4. Run the development server:
-   ```bash
-   pnpm dev
-   ```
+1. Go to **System Settings → Privacy & Security → Screen Recording**
+2. Enable **Shot Perfect**
+3. Restart the application if needed
+
+This permission is required for the app to capture screenshots of your screen.
 
 ## Usage
 
-Once the application is running, you can use the following commands:
+### Quick Start
 
-- **Capture Screenshot**: Use the configured global shortcut to capture a screenshot.
-- **Edit Screenshot**: Open the screenshot in the editor to annotate or modify it.
-- **Access Settings**: Customize your preferences through the settings menu.
+1. Launch Shot Perfect from Applications (or use the menu bar icon)
+2. Capture:
+   - Default: `⌘⇧2` (region)
+   - Optional (enable in Preferences): `⌘⇧F` (fullscreen), `⌘⇧D` (window)
+3. Edit (background/effects/shadow/roundness)
+4. Annotate (shapes, arrows, text, numbered labels)
+5. Extract text: Use the "Extract Text" button to run OCR on your screenshot
+6. Export: `⌘S` to save, `⇧⌘C` to copy to clipboard
 
-For testing, you can run:
+### Auto-apply workflow
+
+For faster workflows, enable **Auto-apply background** on the main screen:
+
+1. Toggle on "Auto-apply background" on the main page
+2. Set your preferred default background in Preferences
+3. Capture a screenshot - it will automatically apply the background and save instantly
+4. No editor needed - perfect for quick captures with consistent styling
+
+### Keyboard Shortcuts
+
+Capture shortcuts are customizable in Preferences.
+
+#### Capture Shortcuts
+
+| Action | Default Shortcut |
+| --- | --- |
+| Capture Region | `⌘⇧2` |
+| Capture Fullscreen | `⌘⇧F` (disabled by default) |
+| Capture Window | `⌘⇧D` (disabled by default) |
+| Cancel Selection | `Esc` |
+
+#### Editor Shortcuts
+
+| Action | Shortcut |
+| --- | --- |
+| Save Image | `⌘S` |
+| Copy to Clipboard | `⇧⌘C` |
+| Undo | `⌘Z` |
+| Redo | `⇧⌘Z` |
+| Delete Annotation | `Delete` or `Backspace` |
+| Close Editor | `Esc` |
+
+## Development
+
+This repo contains:
+
+- The **desktop app** (Tauri + Vite) at the repo root
+- The **landing site** (Next.js) in `bettershot-landing/`
+
+### Desktop app (Tauri)
+
 ```bash
-pnpm test
-```
-To watch for changes:
-```bash
-pnpm test:watch
-```
-For coverage reports:
-```bash
-pnpm test:coverage
+pnpm tauri dev
 ```
 
-Explore the application and enjoy a seamless screenshot experience!
+Other useful commands:
+
+```bash
+pnpm lint:ci
+pnpm test:rust
+pnpm tauri build
+```
+
+### Landing site (Next.js)
+
+```bash
+cd bettershot-landing
+pnpm install
+pnpm dev
+```
